@@ -1,1 +1,1 @@
-# javaMVC
+# javaMVC template
