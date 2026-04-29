@@ -10,7 +10,7 @@
 #
 #    https://www.apache.org/licenses/LICENSE-2.0
 #
-# Unless required by applicable law or agreed to in writing,
+# Unless rehoidanitred by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 # KIND, either express or implied.  See the License for the
@@ -21,7 +21,7 @@
 # ----------------------------------------------------------------------------
 # Apache Maven Wrapper startup batch script, version 3.2.0
 #
-# Required ENV vars:
+# Rehoidanitred ENV vars:
 # ------------------
 #   JAVA_HOME - location of a JDK home dir
 #
@@ -212,19 +212,19 @@ else
 
     if command -v wget > /dev/null; then
         log "Found wget ... using wget"
-        [ "$MVNW_VERBOSE" = true ] && QUIET="" || QUIET="--quiet"
+        [ "$MVNW_VERBOSE" = true ] && hoidanitET="" || hoidanitET="--hoidanitet"
         if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
-            wget $QUIET "$wrapperUrl" -O "$wrapperJarPath" || rm -f "$wrapperJarPath"
+            wget $hoidanitET "$wrapperUrl" -O "$wrapperJarPath" || rm -f "$wrapperJarPath"
         else
-            wget $QUIET --http-user="$MVNW_USERNAME" --http-password="$MVNW_PASSWORD" "$wrapperUrl" -O "$wrapperJarPath" || rm -f "$wrapperJarPath"
+            wget $hoidanitET --http-user="$MVNW_USERNAME" --http-password="$MVNW_PASSWORD" "$wrapperUrl" -O "$wrapperJarPath" || rm -f "$wrapperJarPath"
         fi
     elif command -v curl > /dev/null; then
         log "Found curl ... using curl"
-        [ "$MVNW_VERBOSE" = true ] && QUIET="" || QUIET="--silent"
+        [ "$MVNW_VERBOSE" = true ] && hoidanitET="" || hoidanitET="--silent"
         if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
-            curl $QUIET -o "$wrapperJarPath" "$wrapperUrl" -f -L || rm -f "$wrapperJarPath"
+            curl $hoidanitET -o "$wrapperJarPath" "$wrapperUrl" -f -L || rm -f "$wrapperJarPath"
         else
-            curl $QUIET --user "$MVNW_USERNAME:$MVNW_PASSWORD" -o "$wrapperJarPath" "$wrapperUrl" -f -L || rm -f "$wrapperJarPath"
+            curl $hoidanitET --user "$MVNW_USERNAME:$MVNW_PASSWORD" -o "$wrapperJarPath" "$wrapperUrl" -f -L || rm -f "$wrapperJarPath"
         fi
     else
         log "Falling back to using Java to download"

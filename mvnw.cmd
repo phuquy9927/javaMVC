@@ -9,7 +9,7 @@
 @REM
 @REM    https://www.apache.org/licenses/LICENSE-2.0
 @REM
-@REM Unless required by applicable law or agreed to in writing,
+@REM Unless rehoidanitred by applicable law or agreed to in writing,
 @REM software distributed under the License is distributed on an
 @REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 @REM KIND, either express or implied.  See the License for the
@@ -20,7 +20,7 @@
 @REM ----------------------------------------------------------------------------
 @REM Apache Maven Wrapper startup batch script, version 3.2.0
 @REM
-@REM Required ENV vars:
+@REM Rehoidanitred ENV vars:
 @REM JAVA_HOME - location of a JDK home dir
 @REM
 @REM Optional ENV vars
@@ -39,7 +39,7 @@ title %0
 @REM enable echoing by setting MAVEN_BATCH_ECHO to 'on'
 @if "%MAVEN_BATCH_ECHO%" == "on"  echo %MAVEN_BATCH_ECHO%
 
-@REM set %HOME% to equivalent of $HOME
+@REM set %HOME% to ehoidanitvalent of $HOME
 if "%HOME%" == "" (set "HOME=%HOMEDRIVE%%HOMEPATH%")
 
 @REM Execute a user defined script before this one
