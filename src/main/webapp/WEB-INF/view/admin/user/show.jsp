@@ -11,7 +11,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
+    <meta name="description" content="Hỏi Dân IT - Dự án baloshop" />
     <meta name="author" content="Hỏi Dân IT" />
     <title>Dashboard - Hỏi Dân IT</title>
 
@@ -33,9 +33,11 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
             <h1 class="mt-4">Manage users</h1>
             <ol class="breadcrumb mb-4">
               <li class="breadcrumb-item active"><a href="/admin">Dashboard</a></li>
-              <li class="breadcrumb-item active">Users</li>
+          
+                 <li class="breadcrumb-item active">User</li>
             </ol>
-            <div><div class="mt-5">
+            <div>
+              <div class="mt-5">
       <div class="row">
         <div class="col-12 mx-auto">
           <div class="d-flex justify-content-between">
@@ -74,7 +76,8 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
           </table>
         </div>
       </div>
-    </div></div>
+    </div>
+  </div>
           </div>
         </main>
         <jsp:include page="../layout/footer.jsp" />

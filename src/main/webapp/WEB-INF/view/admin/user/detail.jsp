@@ -11,7 +11,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
+    <meta name="description" content="Hỏi Dân IT - Dự án baloshop" />
     <meta name="author" content="Hỏi Dân IT" />
     <title>Dashboard - Hỏi Dân IT</title>
 
@@ -33,7 +33,8 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
             <h1 class="mt-4">View user</h1>
             <ol class="breadcrumb mb-4">
               <li class="breadcrumb-item active"><a href="/admin">Dashboard</a></li>
-              <li class="breadcrumb-item active">Users</li>
+              <li class="breadcrumb-item"><a href="/admin/user">User</a></li>
+                 <li class="breadcrumb-item active">Detail</li>
             </ol>
             <div>
              <div class="container mt-5">
@@ -44,6 +45,10 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
 
             
           </div>
+          
+    <div class="card-header">
+        User information
+    </div>
           <div class="card" style="width: 60%;">
           <div class="card-header">
             User information

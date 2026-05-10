@@ -32,4 +32,4 @@ If you **share this source code without permission**, it is considered a **copyr
 - Account suspension on learning platforms.
 - Legal action in serious cases.
 
-For permissions or inhoidanitries, contact: **admin@hoidanit.vn**
+For permissions or inquiries, contact: **admin@qui.vn**

@@ -20,10 +20,10 @@
     hello jsp
     <h1>
       
-      ${hoidanit}
+      ${qui}
     </h1>
     <h2>
-      ${hoidanit}
+      ${qui}
     </h2>
     <button class="btn btn-warning">submit</button>
   </body>

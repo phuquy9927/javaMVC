@@ -11,7 +11,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
+    <meta name="description" content="Hỏi Dân IT - Dự án baloshop" />
     <meta name="author" content="Hỏi Dân IT" />
     <title>Dashboard - Hỏi Dân IT</title>
 
@@ -20,7 +20,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
       src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
       crossorigin="anonymous"
     ></script>
-    
+   
   </head>
 
   <body class="sb-nav-fixed">
@@ -32,55 +32,88 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
           <div class="container-fluid px-4">
             <h1 class="mt-4">Update user</h1>
             <ol class="breadcrumb mb-4">
-              <li class="breadcrumb-item active"><a href="/admin">Dashboard</a></li>
-              <li class="breadcrumb-item active">Users</li>
+              <li class="breadcrumb-item active">
+                <a href="/admin">Dashboard</a>
+                <li class="breadcrumb-item"><a href="/admin/user">User</a></li>
+                 <li class="breadcrumb-item active">Update</li>
+              </li>
+            
             </ol>
             <div>
               <div class="mt-5">
-      <div class="row">
-        <div class="col-md-6 mx-auto">
-          <h3>Update a user</h3>
-          <hr />
-          <form:form
-            method="post"
-            action="/admin/user/update"
-            modelAttribute="newUser"
-          >
-            <div class="mb-3" style="display: none">
-              <label class="form-label">ID:</label>
-              <form:input type="text" class="form-control" path="id" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Email:</label>
-              <form:input
-                type="email"
-                class="form-control"
-                path="email"
-                disabled="true"
-              />
-            </div>
+                <div class="row">
+                  <div class="col-md-6 mx-auto">
+                    <h3>Update a user</h3>
+                    <hr />
+                    <form:form
+                      method="post"
+                      action="/admin/user/update"
+                      modelAttribute="newUser"
+                      enctype="multipart/form-data"
+                    >
+                      <div class="mb-3" style="display: none">
+                        <label class="form-label">ID:</label>
+                        <form:input
+                          type="text"
+                          class="form-control"
+                          path="id"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Email:</label>
+                        <form:input
+                          type="email"
+                          class="form-control"
+                          path="email"
+                          readonly="true"
+                          style="
+                            background-color: #e9ecef;
+                            opacity: 1;
+                            cursor: not-allowed;
+                          "
+                        />
+                      </div>
 
-            <div class="mb-3">
-              <label class="form-label">Phone number:</label>
-              <form:input type="text" class="form-control" path="phone" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Full name:</label>
-              <form:input type="text" class="form-control" path="fullName" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Address:</label>
-              <form:input type="text" class="form-control" path="address" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Role:</label>
-              <form:input type="text" class="form-control" path="role.name" />
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
-          </form:form>
-        </div>
-      </div>
-    </div>
+                      <div class="mb-3">
+                        <label class="form-label">Phone number:</label>
+                        <form:input
+                          type="text"
+                          class="form-control"
+                          path="phone"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Full name:</label>
+                        <form:input
+                          type="text"
+                          class="form-control"
+                          path="fullName"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Address:</label>
+                        <form:input
+                          type="text"
+                          class="form-control"
+                          path="address"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Role:</label>
+                        <form:select path="role.name" class="form-select">
+                          <form:option value="ADMIN">ADMIN</form:option>
+                          <form:option value="USER">USER</form:option>
+                        </form:select>
+                      </div>
+                     
+                      </div>
+                      <button type="submit" class="btn btn-primary">
+                        Update
+                      </button>
+                    </form:form>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </main>
@@ -92,8 +125,5 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
       crossorigin="anonymous"
     ></script>
     <script src="/js/scripts.js"></script>
-   
-
-    
   </body>
 </html>
