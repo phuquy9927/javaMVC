@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.naming.Binding;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +32,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @Controller
 public class HomePageController {
 
@@ -39,7 +40,8 @@ public class HomePageController {
     private PasswordEncoder passwordEncoder;
     private final OrderService orderService;
 
-    public HomePageController(ProductService productService, UserService userService, PasswordEncoder passwordEncoder, OrderService orderService) {
+    public HomePageController(ProductService productService, UserService userService, PasswordEncoder passwordEncoder,
+            OrderService orderService) {
         this.productService = productService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
@@ -48,53 +50,57 @@ public class HomePageController {
 
     @GetMapping("/")
     public String getHomePage(Model model) {
-        List<Product> products = productService.fetchProducts();
+        // List<Product> products = productService.fetchProducts();
+
+        Pageable pageble = PageRequest.of(0, 10);
+        Page<Product> prs = this.productService.fetchProducts(pageble);
+        List<Product> products = prs.getContent();
         model.addAttribute("products", products);
 
-       
-        
         return "client/homepage/show";
     }
 
-    //register
+    // register
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
         model.addAttribute("registerUser", new RegisterDTO());
         return "client/auth/register";
     }
-     @PostMapping("/register")
-     public String handleRegister(@ModelAttribute("registerUser") @Valid RegisterDTO registerDTO, BindingResult bindingResult) {
+
+    @PostMapping("/register")
+    public String handleRegister(@ModelAttribute("registerUser") @Valid RegisterDTO registerDTO,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "client/auth/register";
         }
-         User user = this.userService.registerDTOtoUser(registerDTO);
+        User user = this.userService.registerDTOtoUser(registerDTO);
 
-          
         String hashPassword = this.passwordEncoder.encode(user.getPassword());
 
-  
         user.setPassword(hashPassword);
         user.setRole(this.userService.getRoleByName("USER"));
 
         // save database
         this.userService.handelSaveUser(user);
-      
-         return "redirect:/login";
-     }
-     //login
+
+        return "redirect:/login";
+    }
+
+    // login
     @GetMapping("/login")
     public String getLoginPage(Model model) {
-       
+
         return "client/auth/login";
     }
-    //access deny
-     @GetMapping("/access-deny")
+
+    // access deny
+    @GetMapping("/access-deny")
     public String getAccessDenyPage(Model model) {
-       
+
         return "client/auth/access-deny";
     }
 
-     @GetMapping("/order-history")
+    @GetMapping("/order-history")
     public String getOrderHistoryPage(Model model, HttpServletRequest request) {
         User currentUser = new User();// null
         HttpSession session = request.getSession(false);

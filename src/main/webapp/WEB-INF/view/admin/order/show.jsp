@@ -47,6 +47,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                        <c:if test="${empty orders}">
+        <tr>
+            <td colspan="5" class="text-center text-muted">
+                Không có đơn hàng nào.
+            </td>
+        </tr>
+    </c:if>
                                                     <c:forEach var="order" items="${orders}">
                                                         <tr>
                                                             <th>${order.id}</th>
@@ -65,11 +72,40 @@
                                                                     class="btn btn-danger">Delete</a>
                                                             </td>
                                                         </tr>
+                                                        
 
                                                     </c:forEach>
 
                                                 </tbody>
                                             </table>
+                                            <c:if test="${ not empty orders}">
+   <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    <li class="page-item">
+                                                        <a class="${1 eq currentPage ? 'disabled page-link' : 'page-link'}"
+                                                            href="/admin/order?page=${currentPage - 1}"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                        </a>
+                                                    </li>
+                                                    <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
+                                                        <li class="page-item">
+                                                            <a class="${(loop.index + 1) eq currentPage ? 'active page-link' : 'page-link'}"
+                                                                href="/admin/order?page=${loop.index + 1}">
+                                                                ${loop.index + 1}
+                                                            </a>
+                                                        </li>
+                                                    </c:forEach>
+                                                    <li class="page-item">
+                                                        <a class="${totalPages eq currentPage ? 'disabled page-link' : 'page-link'}"
+                                                            href="/admin/order?page=${currentPage + 1}"
+                                                            aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+</c:if>
                                         </div>
 
                                     </div>

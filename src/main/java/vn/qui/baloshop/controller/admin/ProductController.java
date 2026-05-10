@@ -3,6 +3,9 @@ package vn.qui.baloshop.controller.admin;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,15 +39,35 @@ public class ProductController {
         this.productService = productService;
     }
 
-    //view
+    // view
     @GetMapping("/admin/product")
-    public String getProduct(Model model) {
-        List<Product> prs = this.productService.fetchProducts();
-        model.addAttribute("products", prs);
+    public String getProduct(Model model, @RequestParam("page") Optional<String> pageOptional) {
+
+        int page = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                // convert from String to int
+                page = Integer.parseInt(pageOptional.get());
+            } else {
+                // page = 1
+            }
+        } catch (Exception e) {
+            // page = 1
+            // TODO: handle exception
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, 5);
+        Page<Product> prs = this.productService.fetchProducts(pageable);
+        List<Product> listProducts = prs.getContent();
+        model.addAttribute("products", listProducts);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", prs.getTotalPages());
+
         return "admin/product/show";
     }
 
-   @GetMapping("/admin/product/{id}")
+    @GetMapping("/admin/product/{id}")
     public String getProductDetailPage(Model model, @PathVariable long id) {
         Product pr = this.productService.fetchProductById(id).get();
         model.addAttribute("product", pr);
@@ -52,8 +75,7 @@ public class ProductController {
         return "admin/product/detail";
     }
 
-
-    //create
+    // create
     @GetMapping("/admin/product/create")
     public String getCreateProductPage(Model model) {
         model.addAttribute("newProduct", new Product());
@@ -79,7 +101,7 @@ public class ProductController {
         return "redirect:/admin/product";
     }
 
-    //update
+    // update
     @GetMapping("/admin/product/update/{id}")
     public String getUpdateProductPage(Model model, @PathVariable long id) {
         Optional<Product> currentProduct = this.productService.fetchProductById(id);
@@ -93,37 +115,34 @@ public class ProductController {
             Model model,
             @ModelAttribute("newProduct") @Valid Product pr,
             BindingResult newProductBindingResult,
-        @RequestParam("AvatarFile") MultipartFile file) {
+            @RequestParam("AvatarFile") MultipartFile file) {
 
         if (newProductBindingResult.hasErrors()) {
             return "admin/product/update-product";
         }
 
         Product currentProduct = this.productService.fetchProductById(pr.getId()).get();
-         if (currentProduct != null) {
+        if (currentProduct != null) {
             // update new image
             if (!file.isEmpty()) {
                 String img = this.uploadService.handelSaveUploadFile(file, "product");
                 currentProduct.setImage(img);
             }
 
-        if (currentProduct != null) {
+            if (currentProduct != null) {
 
-            currentProduct.setName(pr.getName());
-            currentProduct.setFactory(pr.getFactory());
-            currentProduct.setDetailDesc(pr.getDetailDesc());
-            currentProduct.setPrice(pr.getPrice());
-            currentProduct.setQuantity(pr.getQuantity());
-            currentProduct.setShortDesc(pr.getShortDesc());
-            currentProduct.setSold(pr.getSold());
-            currentProduct.setTarget(pr.getTarget());
-           
+                currentProduct.setName(pr.getName());
+                currentProduct.setFactory(pr.getFactory());
+                currentProduct.setDetailDesc(pr.getDetailDesc());
+                currentProduct.setPrice(pr.getPrice());
+                currentProduct.setQuantity(pr.getQuantity());
+                currentProduct.setShortDesc(pr.getShortDesc());
+                currentProduct.setSold(pr.getSold());
+                currentProduct.setTarget(pr.getTarget());
 
-           
-
-            this.productService.createProduct(currentProduct);
+                this.productService.createProduct(currentProduct);
+            }
         }
-    }
         return "redirect:/admin/product";
     }
 
@@ -140,5 +159,5 @@ public class ProductController {
         this.productService.deleteAProduct(pr.getId());
         return "redirect:/admin/product";
     }
-    
+
 }

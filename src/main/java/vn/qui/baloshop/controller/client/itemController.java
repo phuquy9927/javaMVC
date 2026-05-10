@@ -12,12 +12,20 @@ import jakarta.servlet.http.HttpSession;
 import vn.qui.baloshop.domain.Cart;
 import vn.qui.baloshop.domain.CartDetail;
 import vn.qui.baloshop.domain.Product;
+import vn.qui.baloshop.domain.Product_;
 import vn.qui.baloshop.domain.User;
+import vn.qui.baloshop.domain.dto.ProductCriteriaDTO;
 import vn.qui.baloshop.service.ProductService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -124,7 +132,6 @@ public class itemController {
         long id = (long) session.getAttribute("id");
         currentUser.setId(id);
 
-
         this.productService.handlePlaceOrder(currentUser, session, receiverName, receiverAddress, receiverPhone);
 
         return "redirect:/thanks";
@@ -135,7 +142,7 @@ public class itemController {
         return "client/cart/thanks";
     }
 
-     @PostMapping("/add-product-from-view-detail")
+    @PostMapping("/add-product-from-view-detail")
     public String handleAddProductFromViewDetail(
             @RequestParam("id") long id,
             @RequestParam("quantity") long quantity,
@@ -146,6 +153,52 @@ public class itemController {
         this.productService.handleAddProductToCart(email, id, session, quantity);
         return "redirect:/product/" + id;
     }
-    
+
+     @GetMapping("/products")
+    public String getProductPage(Model model,
+            ProductCriteriaDTO productCriteriaDTO,
+            HttpServletRequest request) {
+        int page = 1;
+        try {
+            if (productCriteriaDTO.getPage().isPresent()) {
+                // convert from String to int
+                page = Integer.parseInt(productCriteriaDTO.getPage().get());
+            } else {
+                // page = 1
+            }
+        } catch (Exception e) {
+            // page = 1
+            // TODO: handle exception
+        }
+
+        // check sort price
+        Pageable pageable = PageRequest.of(page - 1, 10);
+
+        if (productCriteriaDTO.getSort() != null && productCriteriaDTO.getSort().isPresent()) {
+            String sort = productCriteriaDTO.getSort().get();
+            if (sort.equals("gia-tang-dan")) {
+                pageable = PageRequest.of(page - 1, 10, Sort.by(Product_.PRICE).ascending());
+            } else if (sort.equals("gia-giam-dan")) {
+                pageable = PageRequest.of(page - 1, 10, Sort.by(Product_.PRICE).descending());
+            }
+        }
+
+        Page<Product> prs = this.productService.fetchProductsWithSpec(pageable, productCriteriaDTO);
+
+        List<Product> products = prs.getContent().size() > 0 ? prs.getContent()
+                : new ArrayList<Product>();
+
+        String qs = request.getQueryString();
+        if (qs != null && !qs.isBlank()) {
+            // remove page
+            qs = qs.replace("page=" + page, "");
+        }
+
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", prs.getTotalPages());
+        model.addAttribute("queryString", qs);
+        return "client/product/show";
+    }
 
 }
