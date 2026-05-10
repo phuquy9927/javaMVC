@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -41,7 +42,6 @@ public class User {
 
     private String address;
 
-
     private String phone;
 
     private String avatar;
@@ -57,6 +57,23 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Cart cart;
+
+    private String provider;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.provider == null) {
+            this.provider = "GOOGLE";
+        }
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 
     public Role getRole() {
         return role;

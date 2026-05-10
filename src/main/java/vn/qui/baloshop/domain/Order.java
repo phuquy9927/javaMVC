@@ -27,6 +27,9 @@ public class Order {
     private String receiverAddress;
 
     private String status;
+    private String paymentRef;
+    private String paymentStatus;
+    private String paymentMethod;
 
     // user id
     @ManyToOne
@@ -50,6 +53,30 @@ public class Order {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getPaymentRef() {
+        return paymentRef;
+    }
+
+    public void setPaymentRef(String paymentRef) {
+        this.paymentRef = paymentRef;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
     public String getReceiverName() {

@@ -11,7 +11,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
                 <meta name="author" content="Hỏi Dân IT" />
-                <title>Manager Orders</title>
+                <title>Manager Orders - Hỏi Dân IT</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
@@ -43,17 +43,11 @@
                                                         <th>Total Price</th>
                                                         <th>User</th>
                                                         <th>Status</th>
+                                                        <th>Payment</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                        <c:if test="${empty orders}">
-        <tr>
-            <td colspan="5" class="text-center text-muted">
-                Không có đơn hàng nào.
-            </td>
-        </tr>
-    </c:if>
                                                     <c:forEach var="order" items="${orders}">
                                                         <tr>
                                                             <th>${order.id}</th>
@@ -64,6 +58,11 @@
                                                             <td>${order.user.fullName}</td>
                                                             <td>${order.status}</td>
                                                             <td>
+                                                                <div>Status: ${order.paymentStatus}</div>
+                                                                <div>Ref: ${order.paymentRef}</div>
+                                                                <div>Method: ${order.paymentMethod}</div>
+                                                            </td>
+                                                            <td>
                                                                 <a href="/admin/order/${order.id}"
                                                                     class="btn btn-success">View</a>
                                                                 <a href="/admin/order/update/${order.id}"
@@ -72,14 +71,12 @@
                                                                     class="btn btn-danger">Delete</a>
                                                             </td>
                                                         </tr>
-                                                        
 
                                                     </c:forEach>
 
                                                 </tbody>
                                             </table>
-                                            <c:if test="${ not empty orders}">
-   <nav aria-label="Page navigation example">
+                                            <nav aria-label="Page navigation example">
                                                 <ul class="pagination justify-content-center">
                                                     <li class="page-item">
                                                         <a class="${1 eq currentPage ? 'disabled page-link' : 'page-link'}"
@@ -105,7 +102,6 @@
                                                     </li>
                                                 </ul>
                                             </nav>
-</c:if>
                                         </div>
 
                                     </div>

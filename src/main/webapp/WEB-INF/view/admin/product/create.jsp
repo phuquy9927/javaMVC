@@ -33,6 +33,8 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
         });
       });
     </script>
+
+    
   </head>
 
   <body class="sb-nav-fixed">
@@ -137,13 +139,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                           <form:option value="ADIDAS">Adidas</form:option>
                           <form:option value="MIKKOR">Mikkor</form:option>
                           <form:option value="RIVACASE">Rivacase</form:option>
-                          <form:option value="SIMPLECARRY"
-                            >Simplecarry</form:option
-                          >
-                          <form:option value="SUPERDRY">Superdry</form:option>
-                          <form:option value="SOLO">Solo</form:option>
-                          <form:option value="TUCANO">Tucano</form:option>
-                          <form:option value="TARGUS">Targus</form:option>
+                         
                         </form:select>
                       </div>
                       <div class="mb-3 col-12 col-md-6">
@@ -154,9 +150,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                           <form:option value="THOI-TRANG-THE-THAO"
                             >Thời trang thể thao</form:option
                           >
-                          <form:option value="MAY-ANH">Máy ảnh</form:option>
-                          <form:option value="QUAN-DOI">Quân đội</form:option>
-                          <form:option value="MOT-QUAI">Một quai</form:option>
+                         
                         </form:select>
                       </div>
                       <div class="mb-3 col-12 col-md-6">

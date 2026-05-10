@@ -2,6 +2,7 @@ package vn.qui.baloshop.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -94,22 +95,21 @@ public class ProductService {
 
             // Set the appropriate min and max based on the price range string
             switch (p) {
-                case "duoi-10-trieu":
+                case "duoi-500-ngan":
                     min = 1;
+                    max = 500000;
+                    break;
+                case "500-1000-ngan":
+                    min = 500000;
+                    max = 1000000;
+                    break;
+          
+                case "tren-1-trieu":
+                    min = 1000000;
                     max = 10000000;
+                 
                     break;
-                case "10-15-trieu":
-                    min = 10000000;
-                    max = 15000000;
-                    break;
-                case "15-20-trieu":
-                    min = 15000000;
-                    max = 20000000;
-                    break;
-                case "tren-20-trieu":
-                    min = 20000000;
-                    max = 200000000;
-                    break;
+              
             }
 
             if (min != 0 && max != 0) {
@@ -226,7 +226,7 @@ public class ProductService {
 
     public void handlePlaceOrder(
             User user, HttpSession session,
-            String receiverName, String receiverAddress, String receiverPhone) {
+            String receiverName, String receiverAddress, String receiverPhone, String paymentMethod,  String uuid) {
 
         // step 1: get cart by user
         Cart cart = this.cartRepository.findByUser(user);
@@ -242,6 +242,12 @@ public class ProductService {
                 order.setReceiverAddress(receiverAddress);
                 order.setReceiverPhone(receiverPhone);
                 order.setStatus("PENDING");
+
+                 order.setPaymentMethod(paymentMethod);
+                order.setPaymentStatus("PAYMENT_UNPAID");
+             
+                 order.setPaymentRef(paymentMethod.equals("COD") ? "UNKNOWN" : uuid);
+                
 
                 double sum = 0;
                 for (CartDetail cd : cartDetails) {
@@ -274,5 +280,16 @@ public class ProductService {
             }
         }
 
+    }
+
+
+    public void updatePaymentStatus(String paymentRef, String paymentStatus) {
+        Optional<Order> orderOptional = this.orderRepository.findByPaymentRef(paymentRef);
+        if (orderOptional.isPresent()) {
+            // update
+            Order order = orderOptional.get();
+            order.setPaymentStatus(paymentStatus);
+            this.orderRepository.save(order);
+        }
     }
 }
